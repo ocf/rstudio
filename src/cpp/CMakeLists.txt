@@ -130,7 +130,7 @@ if(APPLE OR WIN32 OR RSTUDIO_PACKAGE_BUILD)
 endif()
 
 # default to boost 1.50.0
-set(BOOST_VERSION 1.50.0)
+set(BOOST_VERSION 1.63.0)
 
 # override if necessary
 if (RSTUDIO_BOOST_VERSION)
@@ -152,7 +152,7 @@ list(APPEND BOOST_LIBS
 # UNIX BOOST
 if(UNIX)
    # prefer static link to our custom built version
-   set(RSTUDIO_TOOLS_BOOST /opt/rstudio-tools/boost/boost_1_50_0)
+   set(RSTUDIO_TOOLS_BOOST /opt/rstudio-tools/boost/boost_1_63_0)
    if(NOT RSTUDIO_USE_SYSTEM_BOOST AND EXISTS ${RSTUDIO_TOOLS_BOOST})
       # find headers
       set(Boost_USE_STATIC_LIBS ON)

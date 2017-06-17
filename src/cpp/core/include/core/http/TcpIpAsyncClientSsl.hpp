@@ -132,7 +132,7 @@ private:
    {
       // boost returns "short_read" when the peer calls SSL_shutdown()
       if (ec.category() == boost::asio::error::get_ssl_category() &&
-          ec.value() == ERR_PACK(ERR_LIB_SSL, 0, SSL_R_SHORT_READ))
+          ERR_GET_REASON(ec.value()) == boost::asio::ssl::error::stream_truncated)
       {
          return true;
       }

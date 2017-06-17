@@ -1,5 +1,5 @@
 
-# configure cpack install location 
+# configure cpack install location
 set(CPACK_SET_DESTDIR "ON")
 set(CPACK_INSTALL_PREFIX "${CMAKE_INSTALL_PREFIX}")
 
@@ -11,7 +11,7 @@ if (NOT PACKAGE_ARCHITECTURE)
       exec_program(dpkg ARGS --print-architecture
                    OUTPUT_VARIABLE PACKAGE_ARCHITECTURE)
    elseif(RPM_EXECUTABLE)
-      exec_program(arch OUTPUT_VARIABLE PACKAGE_ARCHITECTURE) 
+      exec_program(arch OUTPUT_VARIABLE PACKAGE_ARCHITECTURE)
    endif()
 endif()
 
@@ -37,7 +37,7 @@ if(RSTUDIO_SERVER)
   # debian control files
   set(DEBIAN_POSTINST postinst.in)
   set(DEBIAN_POSTRM postrm.in)
-  
+
   # rpm scripts
   set(RPM_POSTINST postinst.sh.in)
   set(RPM_POSTRM postrm.sh.in)
@@ -46,7 +46,7 @@ if(RSTUDIO_SERVER)
   # automatic dependency resolution use e.g.
   #   sudo apt-get install gdebi-core
   #   sudo gdebi rstudio-server-0.97.151-amd64.deb
-  set(RSTUDIO_DEBIAN_DEPENDS "psmisc, libapparmor1, libedit2, sudo, lsb-release, libssl1.0.0, ")
+  set(RSTUDIO_DEBIAN_DEPENDS "psmisc, libapparmor1, libedit2, sudo, lsb-release, libssl1.0.0 | libssl1.0.2, ")
 
   # rpm dependencies
   set(RSTUDIO_RPM_DEPENDS "psmisc, ")
@@ -57,18 +57,18 @@ if(RSTUDIO_SERVER)
   endif()
 
 elseif(RSTUDIO_DESKTOP)
- 
+
    # debian control files
   set(DEBIAN_POSTINST postinst-desktop.in)
   set(DEBIAN_POSTRM postrm-desktop.in)
-  
+
   # rpm scripts
   set(RPM_POSTINST postinst-desktop.sh.in)
   set(RPM_POSTRM postrm-desktop.sh.in)
 
   # deb dependencies
-  set(RSTUDIO_DEBIAN_DEPENDS "libjpeg62, libedit2, libgstreamer0.10-0, libgstreamer-plugins-base0.10-0, libssl1.0.0, ")
-  
+  set(RSTUDIO_DEBIAN_DEPENDS "libjpeg62, libedit2, libgstreamer0.10-0, libgstreamer-plugins-base0.10-0, libssl1.0.2, ")
+
   # rpm dependencies
   set(RSTUDIO_RPM_DEPENDS "gstreamer, gstreamer-plugins-base, ")
 
@@ -84,7 +84,7 @@ if(RSTUDIO_SERVER)
       set(RSTUDIO_PACKAGE_SUFFIX "${RSTUDIO_PACKAGE_SUFFIX}suse-")
    elseif(IS_RHEL_5)
       set(RSTUDIO_PACKAGE_SUFFIX "${RSTUDIO_PACKAGE_SUFFIX}rhel5-")
-   elseif(IS_RHEL) 
+   elseif(IS_RHEL)
       set(RSTUDIO_PACKAGE_SUFFIX "${RSTUDIO_PACKAGE_SUFFIX}rhel-")
    endif()
 endif()
@@ -113,7 +113,7 @@ file(COPY ${CMAKE_CURRENT_BINARY_DIR}${CMAKE_FILES_DIRECTORY}/postinst
 
 set(CPACK_DEBIAN_PACKAGE_CONTROL_EXTRA "${CMAKE_CURRENT_BINARY_DIR}/debian-control/postinst;${CMAKE_CURRENT_BINARY_DIR}/debian-control/postrm")
 
-# dynamically configured rpm scripts (only works with cmake 2.8.1 or higher). 
+# dynamically configured rpm scripts (only works with cmake 2.8.1 or higher).
 # alternatively you can get CPackRPM.cmake from the cmake tip and copy it into
 # your local cmake modules directory -- this is what we currently do
 configure_file(${CMAKE_CURRENT_SOURCE_DIR}/rpm-script/${RPM_POSTINST}
@@ -125,14 +125,14 @@ set(CPACK_RPM_SPEC_INSTALL_POST "/bin/true")
 set(CPACK_RPM_POST_INSTALL_SCRIPT_FILE "${CMAKE_CURRENT_BINARY_DIR}/rpm-script/postinst.sh")
 set(CPACK_RPM_POST_UNINSTALL_SCRIPT_FILE "${CMAKE_CURRENT_BINARY_DIR}/rpm-script/postrm.sh")
 
-# /usr and /usr/lib are already present in CPACK_RPM_EXCLUDE_FROM_AUTO_FILELIST, 
+# /usr and /usr/lib are already present in CPACK_RPM_EXCLUDE_FROM_AUTO_FILELIST,
 # but some Linux distributions complain without this explicit suppression
 set(CPACK_RPM_SPEC_MORE_DEFINE "%define ignore \#")
-set(CPACK_RPM_USER_FILELIST 
+set(CPACK_RPM_USER_FILELIST
   "%ignore /usr"
   "%ignore /usr/lib")
 
-set(CPACK_RPM_EXCLUDE_FROM_AUTO_FILELIST_ADDITION 
+set(CPACK_RPM_EXCLUDE_FROM_AUTO_FILELIST_ADDITION
   "/usr/share/applications"
   "/usr/share/icons"
   "/usr/share/pixmaps"

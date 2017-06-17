@@ -149,7 +149,7 @@ namespace {
 bool isSslShutdownError(const core::Error& error)
 {
    return error.code().category() == boost::asio::error::get_ssl_category() &&
-          error.code().value() == ERR_PACK(ERR_LIB_SSL, 0, SSL_R_SHORT_READ);
+          error.code().value() == ERR_PACK(ERR_LIB_SSL, 0, SSL_R_UNEXPECTED_RECORD);
 }
 #else
 bool isSslShutdownError(const core::Error& error)

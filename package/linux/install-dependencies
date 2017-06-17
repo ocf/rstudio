@@ -7,10 +7,10 @@ CMAKE_TARBALL=$CMAKE_VERSION.tar.gz
 wget http://www.cmake.org/files/v2.8/$CMAKE_TARBALL
 tar xf $CMAKE_TARBALL
 cd $CMAKE_VERSION
-./bootstrap 
+./bootstrap
 make
 sudo make install
 cd ..
 rm -rf $CMAKE_VERSION
 rm -f $CMAKE_TARBALL
- 
+
